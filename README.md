@@ -2,7 +2,7 @@
 
 ## Goal
 Create a standardized, multi-target embedded portfolio demonstrating software portability across hardware, schedulers, and languages.
-* Target Hardware: Raspberry Pi Pico (RP2040), STM32L332JC
+* Target Hardware: Raspberry Pi Pico (RP2040), STM32 (NUCLEO-L476RG)
 * Execution Environments: Bare Metal (Superloop), FreeRTOS, Zephyr
 * Implementation Languages: Purse C (C11), Purse C++ (C++17/20)
 * Build System: CMake with __FetchContent__ for autmated dependency management (Pico SDK, STM32CubeHAL, FreeRTOS, GoogleTest)

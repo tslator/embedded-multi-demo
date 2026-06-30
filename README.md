@@ -5,12 +5,12 @@ Create a standardized, multi-target embedded portfolio demonstrating software po
 * Target Hardware: Raspberry Pi Pico (RP2040), STM32 (NUCLEO-L476RG)
 * Execution Environments: Bare Metal (Superloop), FreeRTOS, Zephyr
 * Implementation Languages: Purse C (C11), Purse C++ (C++17/20)
-* Build System: CMake with __FetchContent__ for autmated dependency management (Pico SDK, STM32CubeHAL, FreeRTOS, GoogleTest)
+* Build System: CMake with ```FetchContent``` for autmated dependency management (Pico SDK, STM32CubeHAL, FreeRTOS, GoogleTest)
 * Testing Frameworks: Ceedling (C) and GoogleTest (C++)
 
 ## Proposed Projects
 
-1.  (IMU + Encoder + ADC)
+1. Multicore Sensor Fusion Pipeline (IMU + Encoder + ADC)
 2. High-Rate UART/USB Telemetry Router
 3. Motor Control Loop + Safety Monitor
 4. Networked Command Processor (MQTT/CAN/BLE)

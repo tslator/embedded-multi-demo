@@ -6,7 +6,7 @@
 #include "platform/platform.h"
 #include "platform/platform_delay.h"
 #include "platform/platform_serial.h"
-#include "drivers/drivers.h"
+#include "drivers.h"
 #include "app.h"
 #include "led.h"
 

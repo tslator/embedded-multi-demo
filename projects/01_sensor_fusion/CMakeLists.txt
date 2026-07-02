@@ -63,7 +63,8 @@ pico_enable_stdio_usb(sensor_fusion 1)
 
 # Add the standard library to the build
 target_link_libraries(sensor_fusion
-        pico_stdlib)
+        pico_stdlib
+        pico_multicore)
 
 # Add the standard include files to the build
 target_include_directories(sensor_fusion PRIVATE

@@ -22,4 +22,20 @@ This is a good initial skeleton but it binds directly to the pico and doesn't ma
 
 Refined the organization of platform and rp2040 implementations.  There is still room for improvement because now we aren't selecting the platform based on a build configuration and the naming is still awkward.  Serial debugging is working and abstracted.
 
+**Multi-Core Setup**
+This is the first time I have worked with multiple cores so I'm consulting with LLMs to educate myself.
+
+- Pico boots to Core 0
+- Core 0 must explicitly start Core 1 using `multicore_launch_core1` and a function to call.
+- SRAM and peripherals are shared so concurrency hygiene is required.
+- hardware spinlocks and inter-core FIFO supported
+
+Phase 3 plan is to share a count on Core 0 with Core 1 and write to serial output.
+
+Success!
+
+- had to add pico_multicore library
+- added heartbeat function to app, used platform abstraction to start, push and pop
+- extended platform to wrap start, push and pip functions
+
 

@@ -1,0 +1,1 @@
+[X] Establish a Pico project for sensor fusion

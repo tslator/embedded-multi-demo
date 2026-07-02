@@ -7,15 +7,15 @@ The application provides an high-level interface to the operation of the sensor 
     app_stop - stops the application (typically only for testing purposes)
     app_shutdown - shuts down the application in the event of exception condition
 */
-#include <stdint.h>
+#ifndef APP_H
+#define APP_H
 
-typedef struct
-{
-    uint16_t led_delay;
-} Config;
+#include "app_types.h"
 
 void app_init(void);
 void app_config(Config config);
 void app_run(void);
 void app_stop(void);
 void app_shutdown(void);
+
+#endif

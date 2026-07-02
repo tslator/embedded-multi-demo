@@ -39,12 +39,16 @@ add_executable(sensor_fusion main.c)
 
 target_sources(sensor_fusion PRIVATE
     app/app.c
-    app/led.c
+    drivers/led.c
+    platform/rp2040/gpio_led.c
+    platform/rp2040/delay.c
 )
 
 target_include_directories(sensor_fusion PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}
     ${CMAKE_CURRENT_LIST_DIR}/app
+    ${CMAKE_CURRENT_LIST_DIR}/drivers
+    ${CMAKE_CURRENT_LIST_DIR}/platform
 )
 
 pico_set_program_name(sensor_fusion "sensor fusion")
@@ -61,6 +65,7 @@ target_link_libraries(sensor_fusion
 # Add the standard include files to the build
 target_include_directories(sensor_fusion PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}
+        ${CMAKE_CURRENT_LIST_DIR}/platform
 )
 
 pico_add_extra_outputs(sensor_fusion)

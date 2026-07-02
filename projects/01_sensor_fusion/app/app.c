@@ -1,6 +1,7 @@
-#include <pico/stdlib.h>
 #include <stdint.h>
+#include <stdbool.h>
 
+#include "platform/delay.h"
 #include "app.h"
 #include "led.h"
 
@@ -21,9 +22,9 @@ void app_run(void)
     while (true) 
     {
         led_toggle();
-        sleep_ms(led_delay);
+        delay_ms(led_delay);
         led_toggle();
-        sleep_ms(led_delay);
+        delay_ms(led_delay);
     }
 }
 

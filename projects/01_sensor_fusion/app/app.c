@@ -4,6 +4,7 @@
 #include "platform/platform.h"
 #include "platform/platform_delay.h"
 #include "platform/platform_serial.h"
+#include "drivers/drivers.h"
 #include "app.h"
 #include "led.h"
 
@@ -12,6 +13,7 @@ static uint16_t led_delay = 255;
 void app_init(void)
 {
     platform_init();
+    drivers_init();
 }
 
 void app_config(Config config)

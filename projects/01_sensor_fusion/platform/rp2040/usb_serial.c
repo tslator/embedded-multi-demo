@@ -4,7 +4,7 @@
 
 void serial_print(char const * const text)
 {
-    printf(text);
+    printf("%s", text);
 }
 
 void serial_println(char const * const text)

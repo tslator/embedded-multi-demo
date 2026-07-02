@@ -40,6 +40,7 @@ add_executable(sensor_fusion main.c)
 target_sources(sensor_fusion PRIVATE
     app/app.c
     drivers/led.c
+    drivers/drivers.c
     platform/rp2040/platform.c
     platform/rp2040/gpio_led.c
     platform/rp2040/delay.c

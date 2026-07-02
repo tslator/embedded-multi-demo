@@ -2,6 +2,6 @@
 #define PLATFORM_DELAY_H
 
 
-void delay_ms(int delay);
+void delay_ms(uint32_t delay);
 
 #endif

@@ -2,7 +2,7 @@
 
 #include "platform_serial.h"
 
-void serial_print(char const * const text)
+void platform_serial_print(char const * const text)
 {
     printf("%s", text);
 }

@@ -36,6 +36,18 @@ Success!
 
 - had to add pico_multicore library
 - added heartbeat function to app, used platform abstraction to start, push and pop
-- extended platform to wrap start, push and pip functions
+- extended platform to wrap start, push and pip functions.
+
+**Platform Renaming**
+The file names for the platform implementation seem not particularly consistent especially considering the idea of including an implementation on another multicore MCU like ESP32.
+
+Decide on the following:
+
+platform/<target>/core.c
+platform/<target>/delay.c
+platform/<target>/led.c
+platform/<target>/serial.c
+
+Updated the rp2040 files. 
 
 

@@ -41,10 +41,10 @@ target_sources(sensor_fusion PRIVATE
     app/app.c
     drivers/led.c
     drivers/drivers.c
-    platform/rp2040/platform.c
-    platform/rp2040/gpio_led.c
+    platform/rp2040/core.c
+    platform/rp2040/led.c
     platform/rp2040/delay.c
-    platform/rp2040/usb_serial.c
+    platform/rp2040/serial.c
 )
 
 target_include_directories(sensor_fusion PRIVATE

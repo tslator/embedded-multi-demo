@@ -57,6 +57,20 @@ The application should never "know" whether telemetry leaves over USB or UART.
 
 For this project, the execution model is intentionally split: Core 0 runs a bare-metal superloop for sensor acquisition, and Core 1 runs FreeRTOS for fusion, health, and telemetry.
 
+## Success Criteria
+The following measurable outcomes define a successful system. These become the
+acceptance criteria for Phase 10 performance evaluation.
+
+| # | Criterion | Target |
+|---|---|---|
+| SC-1 | `SensorFrame` production rate | 100 Hz ± 5% under nominal load |
+| SC-2 | IMU samples captured | Zero missed frames over a 60-second run at 1 kHz ODR |
+| SC-3 | End-to-end latency (sensor interrupt → telemetry byte out) | ≤ 50 ms at 10 Hz telemetry rate |
+| SC-4 | Sensor fusion output | Realistic orientation estimate (visible response to physical rotation of IMU) |
+| SC-5 | Inter-core frame transfer | No corruption or loss detected over a 60-second run |
+| SC-6 | Telemetry transport swap | Switching USB CDC → UART requires changes only in `telemetry/transport/` |
+| SC-7 | Host-based unit tests | All middleware and driver-logic tests pass without embedded hardware |
+
 ## Definition of Done
 Explain the complete data flow from sensor interrupt to telemetry output without referencing implementation details.
 

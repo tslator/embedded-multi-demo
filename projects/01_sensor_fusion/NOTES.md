@@ -16,4 +16,10 @@ app_shutdown(); // for testing and exception conditions
 ```
 
 **Application Interface**
-Established an application interface an integrated the led toggle into application run
+Established an application interface an integrated the led toggle into application run.
+
+This is a good initial skeleton but it binds directly to the pico and doesn't match the phase 2 plan. I want to establish the platform and driver hierachy using the LED as the prototype.  Also, I can address phase 3 serial console and debugging tasks.
+
+Refined the organization of platform and rp2040 implementations.  There is still room for improvement because now we aren't selecting the platform based on a build configuration and the naming is still awkward.  Serial debugging is working and abstracted.
+
+

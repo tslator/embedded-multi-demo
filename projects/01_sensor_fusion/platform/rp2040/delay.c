@@ -1,6 +1,6 @@
 #include <pico/stdlib.h>
 
-#include "delay.h"
+#include "platform_delay.h"
 
 void delay_ms(int delay)
 {

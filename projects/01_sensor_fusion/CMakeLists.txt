@@ -40,8 +40,10 @@ add_executable(sensor_fusion main.c)
 target_sources(sensor_fusion PRIVATE
     app/app.c
     drivers/led.c
+    platform/rp2040/platform.c
     platform/rp2040/gpio_led.c
     platform/rp2040/delay.c
+    platform/rp2040/usb_serial.c
 )
 
 target_include_directories(sensor_fusion PRIVATE
@@ -56,7 +58,7 @@ pico_set_program_version(sensor_fusion "0.1")
 
 # Modify the below lines to enable/disable output over UART/USB
 pico_enable_stdio_uart(sensor_fusion 0)
-pico_enable_stdio_usb(sensor_fusion 0)
+pico_enable_stdio_usb(sensor_fusion 1)
 
 # Add the standard library to the build
 target_link_libraries(sensor_fusion

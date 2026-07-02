@@ -55,8 +55,15 @@ Quadrature signals (Ch A and Ch B) are connected to GPIO 0 and GPIO 1 to take ad
 Potentiometer input is routed to the GPIO 26.
 
 #### IMU Input
-SPI bus communication connections are via GPIO 16/17/18/19 while the "Data Ready" interrupt is connected to GPIO 20 (INT1).
+SPI bus communication connections are via GPIO 16/17/18/19 while the interrupt output is connected to GPIO 20 (INT1).
 For this prototype, high-rate IMU reads may run up to 24MHz while setup/configuration writes follow the driver and datasheet write-limit guidance.
+
+The interrupt mode used on INT1 (Data Ready vs. FIFO Watermark) is intentionally
+deferred to Phase 4 driver development, where timing measurements will confirm the
+best approach. See the INT1 vs INT2 section below and HW-DESIGN-NOTE-001 for
+rationale. The diagram labels INT1 as "DRDY Interrupt" as a placeholder reflecting
+the default power-on register state; this will be updated once the driver decision
+is made.
 
 ### Shared Memory
 Protected memory that holds sensor queues.
@@ -92,8 +99,8 @@ flowchart TB
             STATE["State Estimator\nrobot_state_t"]
             TELEM["Telemetry Task"]
         end
-        subgraph SHARED["Shared Memory (Mutex Protected)"]
-            QUEUE["Sensor Queues\n(IMU / Encoder / ADC)"]
+        subgraph SHARED["Shared Memory (Protected)"]
+            QUEUE["Sensor Data Queue\n(IMU / Encoder / ADC)"]
         end
         USB_CDC["USB CDC\n(Power + Serial)"]
 
@@ -120,8 +127,8 @@ flowchart TB
     end
 
     subgraph LEVEL["Resistor Divider\n(5V → 3.3V)"]
-        RDA["Ch A: 2.2kΩ / 3.3kΩ"]
-        RDB["Ch B: 2.2kΩ / 3.3kΩ"]
+        RDA["Ch A: 2.2kΩ / 3.9kΩ"]
+        RDB["Ch B: 2.2kΩ / 3.9kΩ"]
     end
 
     subgraph ANALOG["Analog Input"]
@@ -148,4 +155,9 @@ flowchart TB
 
     %% Potentiometer to Pico
     POT -- "GPIO 26\nAnalog Wiper" --> ADC_CH
+
+    %% Styling
+    style CORE0 fill:#1a3a5c,stroke:#4da6ff,stroke-width:2px,color:#ffffff
+    style CORE1 fill:#1a3a1a,stroke:#4dff88,stroke-width:2px,color:#ffffff
+    style SHARED fill:#3a2a00,stroke:#ffb347,stroke-width:2px,color:#ffffff
 ```

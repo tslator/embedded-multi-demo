@@ -80,6 +80,18 @@ If this were moving toward production, we would consider moving to a translator 
 1. Edge quality degrades at target max RPM/cable length
 2. Missed counts appear during stress testing
 
+## GPIO Configuration Note
+Disable the RP2040 internal pull-ups and pull-downs on GPIO 0 and GPIO 1 before
+enabling the PIO state machine. The internal pull-up is typically 50–80 kΩ; if left
+enabled it forms a parallel path with Rbottom (3.9 kΩ), loading the divider and
+raising the logic-high voltage above the calculated 3.20V. With a 3.9 kΩ Rbottom
+the pull-up contributes a small but non-zero shift — not dangerous, but avoids a
+confusing discrepancy between calculated and measured voltages during bring-up.
+
+In the RP2040 SDK: call `gpio_disable_pulls(pin)` for each encoder GPIO before
+configuring PIO. Confirm with a bench measurement: Voh at the GPIO pin should read
+close to 3.20V with the encoder output high.
+
 ## Validation Checklist
 1. Confirm common ground between encoder and Pico
 2. Measure logic-high at RP2040 pin (target near 3.2V with divider)

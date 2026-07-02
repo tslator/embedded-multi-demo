@@ -39,7 +39,7 @@ This combination of sensors provides the challenge of merging variable sensor ra
 
 |Sensor|Typical Rate|Trigger|
 |---|---|---|
-|IMU|1kHz|SPI Interupt|
+|IMU|1kHz|SPI Interrupt|
 |Encoder|Variable|GPIO Interrupt|
 |ADC|100Hz|Timer|
 
@@ -53,7 +53,7 @@ Processing
 ## Important
 Keep transports independent from processing.
 
-The appllication should never "known" whether telemtry leaves over USB or UART.
+The application should never "know" whether telemetry leaves over USB or UART.
 
 For this project, the execution model is intentionally split: Core 0 runs a bare-metal superloop for sensor acquisition, and Core 1 runs FreeRTOS for fusion, health, and telemetry.
 
@@ -108,14 +108,16 @@ Verify the hardware and development environment.
 ## Deliverables
 - Blinky
 - Serial console
-- Dual-core heartbeat
+- Dual-core heartbeat: Core 0 increments a counter in shared memory via the hardware FIFO;
+  Core 1 reads it and toggles an LED or prints it over USB CDC. This exercises the
+  inter-core FIFO path end-to-end before any sensor code is written.
 
 ## Definition of Done
 Both cores execute independently and communicate successfully.
 
 # Phase 4 - Driver Development
 
-## Object
+## Objective
 Develop reusable drivers for each peripheral.
 
 ## Drivers
@@ -170,7 +172,7 @@ Each `SensorFrame` is referenced to a single frame timestamp, and each sensor va
 ## Definition of Done
 Sensor frames are produced at a fixed rate.
 
-# Phase 6 - Inter-Core COmmunication
+# Phase 6 - Inter-Core Communication
 
 ## Objective
 Transfer sensor frames safely between cores.
@@ -347,7 +349,7 @@ Test
 The system should continue operating whenever practical.
 
 ## Definition of Done
-Failures are detected, reported and handles gracefully.
+Failures are detected, reported and handled gracefully.
 
 
 # Phase 12 - Documentation

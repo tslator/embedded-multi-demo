@@ -3,7 +3,7 @@ Describe the software architecture in terms of layers, including the major softw
 
 ## Architecture
 - The application never talks directly to USB, UART, or CAN.  It produces `SystemState` and `HealthState`, which are passed to the telemetry subsystem.
-- The telemetry subsystem is explicityly layered into:
+- The telemetry subsystem is explicitly layered into:
   - Data Model
   - Serialization
   - Transport
@@ -27,7 +27,7 @@ Health monitoring follows a separate `HealthState` path rather than being embedd
 |---|---|
 |Strict Ownership|Core 0 exclusively owns all hardware peripherals.  If Core 1 wants sensor data, it must wait for the Queue.|
 |Coherent Frames|Core 0 produces a `SensorFrame` with one frame timestamp and per-sensor freshness flags so Fusion can distinguish new, carried-forward, and stale values across asynchronous IMU, Encoder, and ADC updates.|
-|Isolation|The "Sensor Fusion" software is abstracted from the hardware, facilitating testing|
+|Isolation|The "Sensor Fusion" software is abstracted from the hardware, facilitating testing.|
 |Telemetry Decoupling|Telemetry runs at its own rate, e.g. 10Hz, by reading the last known state through a Mutex, preventing slow serial prints from interfering with the 100Hz Fusion loop.|
 
 
@@ -171,7 +171,8 @@ flowchart TB
     %% Health Metrics Path
     LOOP_ACQ -->|"Drop/High-Water Stats"| SH_HEALTH
     TASK_FUSION -->|"Latency Stats"| SH_HEALTH
-    SH_HEALTH -->|"Publish"| TASK_TEL
+    SH_HEALTH -->|"Read stats"| TASK_HEALTH
+    TASK_HEALTH -->|"Publish diagnostics"| TASK_TEL
     
     %% Final Output
     TASK_TEL -->|"USB CDC / Serial"| PC["Development PC"]

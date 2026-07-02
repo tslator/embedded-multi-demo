@@ -39,8 +39,11 @@ add_executable(sensor_fusion main.c)
 
 target_sources(sensor_fusion PRIVATE
     app/app.c
-    drivers/led.c
+    drivers/led/led.c
     drivers/drivers.c
+    drivers/imu/imu.c
+    drivers/encoder/encoder.c
+    drivers/adc/adc.c
     platform/rp2040/core.c
     platform/rp2040/led.c
     platform/rp2040/delay.c
@@ -51,6 +54,7 @@ target_include_directories(sensor_fusion PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}
     ${CMAKE_CURRENT_LIST_DIR}/app
     ${CMAKE_CURRENT_LIST_DIR}/drivers
+    ${CMAKE_CURRENT_LIST_DIR}/drivers/led
     ${CMAKE_CURRENT_LIST_DIR}/platform
 )
 

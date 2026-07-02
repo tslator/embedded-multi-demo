@@ -50,4 +50,20 @@ platform/<target>/serial.c
 
 Updated the rp2040 files. 
 
+**Driver Interfaces**
+For phase 4, I need to create the driver interfaces for each of the sensors: IMU, encoder, and ADC.  From the application perspective, via a services that retrieves the latest samples, the interface to each driver is the same:
+
+```c
+int initialize(void);
+int start(void);
+void stop(void);
+int read(void *out, size_t len);
+```
+
+I'm not a fan of `void` types, but this is C and I'm not entirely sure of the details yet.  Once I know, I might prefer a `read_as_xxx` or `to_xxx` where I can add typing and hide the details in code.
+
+
+
+
+
 

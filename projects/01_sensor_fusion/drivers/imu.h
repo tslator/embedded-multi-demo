@@ -3,9 +3,9 @@
 
 #include "imu_types.h"
 
-int *_init(imu_driver_t* instance, const imu_config_t* config);
-int *_start(imu_driver_t* instance);
-int *_read(imu_driver_t* instance, imu_sample_t* sample);
-void *_stop(imu_driver_t* instance);
+int imu_init(imu_driver_t* instance, const imu_config_t* config);
+int imu_start(imu_driver_t* instance);
+int imu_read(imu_driver_t* instance, imu_sample_t* sample);
+void imu_stop(imu_driver_t* instance);
 
 #endif

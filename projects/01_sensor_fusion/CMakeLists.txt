@@ -39,14 +39,14 @@ add_executable(sensor_fusion main.c)
 
 target_sources(sensor_fusion PRIVATE
     app/app.c
-    drivers/led/led.c
-    drivers/drivers.c
-    drivers/imu/imu.c
-    drivers/encoder/encoder.c
     drivers/adc/adc.c
+    drivers/drivers.c
+    drivers/led/led.c
+    drivers/encoder/encoder.c
+    drivers/imu/imu.c
     platform/rp2040/core.c
-    platform/rp2040/led.c
     platform/rp2040/delay.c
+    platform/rp2040/led.c
     platform/rp2040/serial.c
 )
 

@@ -63,3 +63,18 @@ int read(void *out, size_t len);
 I'm not a fan of `void` types, but this is C and I'm not entirely sure of the details yet.  Once I know, I might prefer a `read_as_xxx` or `to_xxx` where I can add typing and hide the details in code.
 
 Preliminary drivers in place.
+
+**03JUL26** - Today I want to flesh out a complete driver, I'm choosing ADC -- it's the simplest, its types and data members, and enumerations for return times.
+
+**ADC Driver Detail**
+First on the list, is to address return types.  Raw integer return types are no fun, so I'm defining enumerations.  Also, fixing but the `const` correctness.  I'm a `east-const`.
+
+```c
+enum {
+    ADC_OK,
+    ADC_ERR_NOT_INIT,
+    ADC_ERR_NOT_STARTED,
+    ADC_ERR_BAD_ARG,
+    ADC_ERR_PLATFORM
+} adc_status_t;
+```

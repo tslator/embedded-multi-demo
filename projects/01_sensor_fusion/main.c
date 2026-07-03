@@ -1,6 +1,6 @@
 #include "app.h"
 
-Config config = {
+app_config_t config = {
     .led_delay = 500
 };
 

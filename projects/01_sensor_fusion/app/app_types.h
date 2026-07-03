@@ -6,7 +6,7 @@
 typedef struct
 {
     uint16_t led_delay;
-} Config;
+} app_config_t;
 
 
 #endif

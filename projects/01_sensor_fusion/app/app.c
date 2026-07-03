@@ -37,7 +37,7 @@ void app_init(void)
     platform_core1_start(heartbeat_func);
 }
 
-void app_config(Config config)
+void app_config(app_config_t config)
 {
     led_delay = config.led_delay;
 }

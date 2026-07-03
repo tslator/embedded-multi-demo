@@ -13,7 +13,7 @@ The application provides an high-level interface to the operation of the sensor 
 #include "app_types.h"
 
 void app_init(void);
-void app_config(Config config);
+void app_config(app_config_t config);
 void app_run(void);
 void app_stop(void);
 void app_shutdown(void);

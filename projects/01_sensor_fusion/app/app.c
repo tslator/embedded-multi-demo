@@ -54,7 +54,7 @@ void app_run(void)
         }
         serial_println("Looping ...");
         led_toggle();
-        delay_ms(led_delay);
+        platform_delay_ms(led_delay);
     }
 }
 

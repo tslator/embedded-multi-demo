@@ -1,7 +1,5 @@
 #include <stdint.h>
 #include <stdbool.h>
-#include <memory.h>
-#include <stdio.h>
 
 #include "platform/platform.h"
 #include "platform/platform_delay.h"
@@ -51,19 +49,5 @@ void app_stop(void)
 
 void app_shutdown(void)
 {
-
-}
-
-void app_heartbeat(void)
-{
-    char msg[64];
-    memset(msg, 0, sizeof(msg));
-    while (true)
-    {
-        uint32_t value = platform_fifo_pop_u32_blocking();
-        int n = snprintf(msg, sizeof(msg), "Heartbeat got: %lu", value);
-        platform_serial_println(msg);
-        // serial_println("looping ...");
-    }
 
 }

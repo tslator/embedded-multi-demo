@@ -8,8 +8,7 @@ int main()
     system_status_t status = system_init();
     assert(status == SYS_OK);
 
-    system_config_t config = system_get_default_config();
-    status = system_config(config);
+    status = system_config(nullptr);
     assert(status == SYS_OK);
 
     system_start();

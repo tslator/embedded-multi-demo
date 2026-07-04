@@ -1,3 +1,6 @@
+#include <assert.h>
+#include <stdlib.h>
+#include <memory.h>
 #include "app.h"
 #include "drivers.h"
 #include "platform.h"
@@ -7,11 +10,13 @@
 #include "app_types.h"
 #include "scheduler.h"
 
-static system_config_t const sys_config = {
+
+static system_config_t default_config = {
     .adc_channel = 0,
-    .role = HEARTBEAT
+    .heartbeat_svc = {ROLE_HEARTBEAT, app_heartbeat}
 };
 
+static system_config_t *sys_config = nullptr;
 
 system_status_t system_init()
 {
@@ -22,21 +27,28 @@ system_status_t system_init()
     return SYS_OK;
 }
 
-system_config_t system_get_default_config(void)
+system_status_t system_config(system_config_t *config)
 {
-    return sys_config;
-}
+    system_config_t *source_config = nullptr;
+    size_t target_config_size = 0;
 
-system_status_t system_config(system_config_t config)
-{
-    switch (config.role)
+    if (config != nullptr)
     {
-        case HEARTBEAT:
-            platform_core1_start(app_heartbeat);
-            break;
+        source_config = config;
+        target_config_size = sizeof(*config);
     }
-    
-    drivers_config(config.adc_channel);
+    else
+    {
+        source_config = &default_config;
+        target_config_size = sizeof(default_config);
+    }
+
+    sys_config = malloc(target_config_size);
+    assert(sys_config != nullptr);
+    memset(sys_config, 0, target_config_size);
+    memcpy(sys_config, source_config, target_config_size);
+
+    drivers_config(sys_config->adc_channel);
 
     app_config_t app_config_data = {
         .loop_delay = 500
@@ -53,6 +65,9 @@ void system_start(void)
     // launch Core 1 via platform primitive
     // enter main
 
+    platform_core1_start(sys_config->heartbeat_svc.service_func);
+
+    app_heartbeat_start();
     sched_run();
 }
 

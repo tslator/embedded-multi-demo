@@ -11,14 +11,19 @@ typedef enum
 
 typedef enum
 {
-    HEARTBEAT
-} system_role_t;
+    ROLE_HEARTBEAT
+} system_service_role_t;
+
+typedef struct 
+{
+    system_service_role_t role;
+    CORE1_FUNCTION service_func;
+} system_service_t;
 
 typedef struct 
 {
     uint8_t adc_channel;
-    system_role_t role;
-
+    system_service_t heartbeat_svc;
 } system_config_t;
 
 #endif

@@ -136,3 +136,7 @@ I have discovered that the multicore api is rather simple in that the function p
 
 
 **04JUL26** - There were many changes to get the improved structure and I left the changes uncommitted.  Things have stabilized, except for how to run Core 1, first thing to do is commit.
+
+**Core 1 Management**
+I want to load Core 1 during configuration (system_config), but not start Core 1 until the scheduler starts (system_start).
+

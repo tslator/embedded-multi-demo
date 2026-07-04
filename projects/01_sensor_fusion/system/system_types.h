@@ -2,7 +2,6 @@
 #define SYSTEM_TYPES_H
 
 #include <stdint.h>
-#include "platform_types.h"
 
 typedef enum
 {

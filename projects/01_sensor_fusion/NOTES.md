@@ -140,3 +140,6 @@ I have discovered that the multicore api is rather simple in that the function p
 **Core 1 Management**
 I want to load Core 1 during configuration (system_config), but not start Core 1 until the scheduler starts (system_start).
 
+I struggled with how to define/declar the configuration, ultimately deciding to pass in a null pointer and use nullness to choose betweein default and override.  The system will be static, so override is only for testing.
+
+Also wrestled with handling core 1 function definition opting for an enumeration for now.  As more services are added, the shape will become clearer.

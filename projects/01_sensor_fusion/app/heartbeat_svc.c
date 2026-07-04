@@ -21,10 +21,8 @@ void app_heartbeat(void)
     while (true)
     {
         uint32_t value = platform_fifo_pop_u32_blocking();
-        int n = snprintf(msg, sizeof(msg), "Heartbeat got: %lu", value);
-        assert(n == sizeof(msg));
+        (void) snprintf(msg, sizeof(msg), "Heartbeat got: %lu", value);
         platform_serial_println(msg);
-        // serial_println("looping ...");
     }
 
 }

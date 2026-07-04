@@ -9,6 +9,7 @@
 #include "system_types.h"
 #include "app_types.h"
 #include "scheduler.h"
+#include "heartbeat_svc.h"
 
 
 static system_config_t default_config = {
@@ -29,24 +30,11 @@ system_status_t system_init()
 
 system_status_t system_config(system_config_t *config)
 {
-    system_config_t *source_config = nullptr;
-    size_t target_config_size = 0;
-
-    if (config != nullptr)
-    {
-        source_config = config;
-        target_config_size = sizeof(*config);
-    }
-    else
-    {
-        source_config = &default_config;
-        target_config_size = sizeof(default_config);
-    }
-
-    sys_config = malloc(target_config_size);
+    sys_config = config == nullptr ? &default_config : config;
     assert(sys_config != nullptr);
-    memset(sys_config, 0, target_config_size);
-    memcpy(sys_config, source_config, target_config_size);
+    assert(sys_config->adc_channel < 8);
+    assert(sys_config->heartbeat_svc.role == ROLE_HEARTBEAT);
+    assert(sys_config->heartbeat_svc.service_func != nullptr);
 
     drivers_config(sys_config->adc_channel);
 
@@ -64,6 +52,8 @@ void system_start(void)
     // start drivers needed on Core 0
     // launch Core 1 via platform primitive
     // enter main
+
+    assert(sys_config != nullptr);
 
     platform_core1_start(sys_config->heartbeat_svc.service_func);
 

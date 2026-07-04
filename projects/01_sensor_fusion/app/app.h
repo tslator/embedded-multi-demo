@@ -19,7 +19,5 @@ void app_update_telemetry(void);
 void app_throttle_loop(void);
 void app_stop(void);
 void app_shutdown(void);
-void app_heartbeat(void);
-void app_heartbeat_start(void);
 
 #endif

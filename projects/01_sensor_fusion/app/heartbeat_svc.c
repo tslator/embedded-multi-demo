@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -21,6 +22,7 @@ void app_heartbeat(void)
     {
         uint32_t value = platform_fifo_pop_u32_blocking();
         int n = snprintf(msg, sizeof(msg), "Heartbeat got: %lu", value);
+        assert(n == sizeof(msg));
         platform_serial_println(msg);
         // serial_println("looping ...");
     }

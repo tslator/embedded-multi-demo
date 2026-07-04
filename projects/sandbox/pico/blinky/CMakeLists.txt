@@ -41,7 +41,7 @@ pico_set_program_name(blinky "blinky")
 pico_set_program_version(blinky "0.1")
 
 # Modify the below lines to enable/disable output over UART/USB
-pico_enable_stdio_uart(blinky 0)
+pico_enable_stdio_uart(blinky 1)
 pico_enable_stdio_usb(blinky 0)
 
 # Add the standard library to the build

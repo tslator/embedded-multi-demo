@@ -17,7 +17,6 @@ typedef enum
 typedef struct 
 {
     system_service_role_t role;
-    CORE1_FUNCTION service_func;
 } system_service_t;
 
 typedef struct 

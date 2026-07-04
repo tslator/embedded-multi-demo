@@ -14,7 +14,7 @@
 
 static system_config_t default_config = {
     .adc_channel = 0,
-    .heartbeat_svc = {ROLE_HEARTBEAT, app_heartbeat}
+    .heartbeat_svc = ROLE_HEARTBEAT
 };
 
 static system_config_t *sys_config = nullptr;
@@ -34,7 +34,6 @@ system_status_t system_config(system_config_t *config)
     assert(sys_config != nullptr);
     assert(sys_config->adc_channel < 8);
     assert(sys_config->heartbeat_svc.role == ROLE_HEARTBEAT);
-    assert(sys_config->heartbeat_svc.service_func != nullptr);
 
     drivers_config(sys_config->adc_channel);
 
@@ -55,9 +54,15 @@ void system_start(void)
 
     assert(sys_config != nullptr);
 
-    platform_core1_start(sys_config->heartbeat_svc.service_func);
+    switch (sys_config->heartbeat_svc.role)
+    {
+        case ROLE_HEARTBEAT:
+        default:
+            platform_core1_start(app_heartbeat);
+            app_heartbeat_start();
+            break;
+    }
 
-    app_heartbeat_start();
     sched_run();
 }
 

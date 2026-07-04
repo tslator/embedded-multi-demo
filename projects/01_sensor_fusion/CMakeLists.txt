@@ -48,6 +48,10 @@ target_sources(sensor_fusion PRIVATE
     platform/rp2040/delay.c
     platform/rp2040/led.c
     platform/rp2040/serial.c
+    platform/rp2040/adc.c
+    platform/rp2040/time.c
+    system/system.c
+    system/scheduler.c
 )
 
 target_include_directories(sensor_fusion PRIVATE
@@ -56,6 +60,7 @@ target_include_directories(sensor_fusion PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/drivers
     ${CMAKE_CURRENT_LIST_DIR}/drivers/led
     ${CMAKE_CURRENT_LIST_DIR}/platform
+    ${CMAKE_CURRENT_LIST_DIR}/system
 )
 
 pico_set_program_name(sensor_fusion "sensor fusion")
@@ -74,6 +79,8 @@ target_link_libraries(sensor_fusion
 target_include_directories(sensor_fusion PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}
         ${CMAKE_CURRENT_LIST_DIR}/platform
+        ${CMAKE_CURRENT_LIST_DIR}/drivers
+        ${CMAKE_CURRENT_LIST_DIR}/system
 )
 
 pico_add_extra_outputs(sensor_fusion)

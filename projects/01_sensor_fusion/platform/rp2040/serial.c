@@ -7,7 +7,7 @@ void platform_serial_print(char const * const text)
     printf("%s", text);
 }
 
-void serial_println(char const * const text)
+void platform_serial_println(char const * const text)
 {
     printf("%s\n", text);
 }

@@ -78,3 +78,61 @@ enum {
     ADC_ERR_PLATFORM
 } adc_status_t;
 ```
+
+For the configuration, we need a channel and a voltage reference. Although for the purpose of this project, there is only on ADC, allowing the certain fixed values to be pass facilitates testing.  For conveniences, I'm adding an over sample parameter to allow more suffisticated sample beyond the hardware capabilities and a boolean to control how the output is returned -- raw counts vs millivolts.
+
+```c
+typedef struct {
+    uint8_t channel;
+    uint8_t vref_millivolt;
+    uint8_t oversample_count;
+    bool as_millivolt;
+} adc_config_t;
+```
+
+For the sample data, we need a timestamp for when the sample was captured, the raw count (12-bit), value as millivolts and a boolean for whether the sample is valid.
+
+```c
+typedef struct {
+    uint32_t timestamp_us;
+    uint16_t raw_12bit;
+    uint16_t millivolt;
+    bool valid;
+} adc_sample_t;
+```
+
+And lastly, the driver itself needs to track if it has been initialized, started, it's configuration, and the last sample captured.
+
+```c
+typedef struct {
+    bool initialized;
+    bool started;
+    adc_config_t config;
+    adc_sample_t last_sample;
+} adc_driver_t;
+```
+
+**NOTE: With this ordering, there should be a single byte of padding at the end of adc_driver_t due to the bool in adc_sample_t**
+
+At this point, I realize that `app_init` has content that is not appropriate for application.  I need to properly structure how the system, platform, drivers and application are initialized, configured and executed.
+
+First, its important to separate concerns.
+
+- Platform: how hardware/MCU features are initialized and used (clock, stio, multicore launch, time, etc)
+- Drivers: sensor/peripheral lifecycle and data access
+- Runtime or system bootstrap: startup order, driver configuration, platform setup
+- App: behavior policy and use-case flow
+
+I'm introducing a `system` folder and abstraction.
+
+                    main
+                      |
+                    system
+                ______|_____
+                |           |
+            platform      drivers
+           
+I have discovered that the multicore api is rather simple in that the function passed to launch is immediately executed.  That makes sense, but it does not work well with an `init`, `config`, `run` flow.  I learned about a few similar solutions that essentially include a logical semaphore (flag, command, etc) that holds the function is an idle state until it is signaled to start processing.  An alternative is to hard reset the core and launch when needed.  This one is more low-level and seems out of place for how I'm structuring things.
+
+
+**04JUL26** - There were many changes to get the improved structure and I left the changes uncommitted.  Things have stabilized, except for how to run Core 1, first thing to do is commit.

@@ -2,8 +2,7 @@
 #define PLATFORM_H
 
 #include <stdint.h>
-
-typedef void (*CORE1_FUNCTION)(void);
+#include "platform_types.h"
 
 void platform_init();
 void platform_core1_start(CORE1_FUNCTION func);

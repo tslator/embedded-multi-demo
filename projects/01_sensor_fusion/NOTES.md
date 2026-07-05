@@ -143,3 +143,50 @@ I want to load Core 1 during configuration (system_config), but not start Core 1
 I struggled with how to define/declar the configuration, ultimately deciding to pass in a null pointer and use nullness to choose betweein default and override.  The system will be static, so override is only for testing.
 
 Also wrestled with handling core 1 function definition opting for an enumeration for now.  As more services are added, the shape will become clearer.
+
+**05JUL26** - now that we have a skeletal structure for the project and abstractions, I want to install Ceedling for testing.  In the past, I have allowed Ruby and Ceedling to be installed into the default paths.  When using LLMs, that requires access to the user account folders which, just seems wrong and more complicated.  Instead, I want to install Ceedling within the project workspace.  Here is a rough guide:
+
+1. update .gitignore to exclude the .vendor and .bundle folders - we don't want them in source control
+2. install Ruby within the workspace
+   This varies depending on OS:
+   - Windows: download 7-zip archive version of Ruby from https://rubyinstaller.org/downloads/ and extract the architec into `.vendor/ruby`
+   - Linux/macOS: use Ruby's build manager, `ruby-build` or `mise` to compile/download Ruby targeting the workspace folder
+        ```bash
+        mkdir -p .vendory/ruby
+        ruby-build <version> .vendor/ruby
+        ```
+3. install ceedling into workspace
+   - create a Gemfile
+    ```bash
+    source 'https://rubygems.org'
+    gem 'ceedling'
+    ```
+    - add local path to $PATH
+    ```bash
+    export PATH="$PWD/.vendor/ruby/bin:$PATH"
+    ```
+    - force bundler to install all gems inside workspace folder
+    ```bash
+    gem install bundler
+    bundle config set --local path '.vendor/bundle'
+    bundle install
+    ```
+4. running Ceedling
+   ```bash
+   bundle exec ceedling new my_test_project
+   ```
+   ```bash
+   bundle exec ceedling test:all
+   ```
+    NOTE: Create a batch or shell script file to invoke tests, e.g. ./run_test.sh, that prepends `.vendor/ruby/bin` to the path and executes the bundle command.
+
+While the above was the plan, some improvements were possible.
+1. no need for the '.' in the folders.  Was able to establish a ruby environment with this structure:
+   
+   <rootfolder>
+        |_ Gemfile
+        |_ ruby
+             |_ bundle
+             |_ installation
+
+Also, each project gets its own `project.yaml` file as well as its own scripts to run the tests: `run_tests.sh` and `run_tests.bat`       

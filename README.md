@@ -114,3 +114,42 @@ Demonstrates:
   - Timers for periodic logging
   - Queues for sensor data
   - Priority tuning to avoid SD card latency spikes
+
+
+# Unit Testing
+The Ceedling test environment is completely hosted within the workspace.
+
+```text
+embedded-multi-demo/
+├── Gemfile
+├── ruby/
+│   ├── installation/   <-- Extracted Ruby engine
+│   └── bundle/         <-- Third-party gems (Ceedling/Benchmark)
+└── projects/
+    └── 01_sensor_fusion/
+        └── project.yaml
+        └── tests
+            └── folders mimic the source folders under <project>, e.g. 01_sensor_fusion
+        └── run_tests.sh
+        └── run_test.bat
+```
+
+The Ruby environment is not under source control so it must be created after cloning the repository as follows:
+
+1. Create the folder
+```bash
+mkdir -p ruby/bundle
+```
+2. Extract the 7-zip archive: this file is under source control
+3. Rename the parent folder of the `bin` folder to `installation`
+4. Move `installation` folder under `ruby` folder
+5. Execute the following commands from the project root folder, e.g. embedded-multi-demo
+```bash
+export PATH="$PWD/ruby/installation/bin:$PATH"
+bundle config set --local path 'ruby/bundle'
+bundle install
+```
+6. Change to `projects/01_sensor_fusion` and run the following script:
+```bash
+./run_tests.sh # or ./run_tests.bat
+```

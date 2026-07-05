@@ -6,6 +6,12 @@
 :paths:
   :test:
     - tests/**
+  :include:
+    - .
+    - app
+    - drivers
+    - platform
+    - system
   :source:
     - app/**
     - drivers/**
@@ -17,3 +23,18 @@
 :cmock:
   :mock_prefix: mock_
   :when_no_prototypes: :warn
+  :plugins:
+    - :ignore
+    - :callback
+    - :ignore_arg
+    - :expect_any_args
+    - :return_thru_ptr
+
+:flags:
+  :test:
+    :compile:
+      '*':
+        - -std=gnu2x
+  :release:
+    :compile:
+      - -std=gnu2x

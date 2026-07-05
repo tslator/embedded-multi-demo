@@ -1,0 +1,19 @@
+:project:
+  :build_root: build
+  :use_exceptions: FALSE
+  :use_mocks: TRUE
+
+:paths:
+  :test:
+    - tests/**
+  :source:
+    - app/**
+    - drivers/**
+    - platform/**
+    - system/**
+  :support:
+    - tests/support
+
+:cmock:
+  :mock_prefix: mock_
+  :when_no_prototypes: :warn

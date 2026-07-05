@@ -16,8 +16,9 @@ This is a portfolio of working prototypes, not production designs. All hardware 
 
 ## 2. Language & Coding Standards
 - **C/C++**: 
-  - Use modern C (C11/C17) or C++ (C++17/20) as specified by the sub-project.
+  - Use modern C (C23) or C++ (C++17/20) as specified by the sub-project.
   - Avoid dynamic memory allocation (`malloc`/`new`) after the initialization phase.
+  - Prefer `nullptr` over `NULL` or `0` for null pointer constants.
   - Use `volatile` correctly for shared variables between ISRs and tasks.
   - Prefer fixed-width integers (`uint32_t`, etc.) from `<stdint.h>`.
 - **Naming Conventions**:

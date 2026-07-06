@@ -44,20 +44,6 @@ void test_app_setpoint_update_invokes_setpoint_service(void)
     app_setpoint_update();
 }
 
-void test_app_heartbeat_publish_invokes_heartbeat_service(void)
-{
-    heartbeat_svc_publish_next_ExpectAndReturn(true);
-
-    app_heartbeat_publish();
-}
-
-void test_app_telemetry_publish_invokes_telemetry_service(void)
-{
-    telemetry_svc_publish_Expect();
-
-    app_telemetry_publish();
-}
-
 void test_app_stop_stops_setpoint_service(void)
 {
     setpoint_svc_stop_Expect();

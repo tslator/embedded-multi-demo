@@ -6,9 +6,9 @@
 #include "platform_serial.h"
 #include "drivers.h"
 #include "app.h"
-#include "led.h"
 #include "setpoint_svc.h"
 #include "heartbeat_svc.h"
+#include "telemetry_svc.h"
 
 static uint16_t loop_delay = 255;
 
@@ -22,6 +22,7 @@ void app_init(void)
 void app_config(app_config_t config)
 {
     loop_delay = config.loop_delay;
+    heartbeat_svc_set_led_enabled(config.heartbeat_led_enabled);
 }
 
 void app_setpoint_update(void)
@@ -42,10 +43,9 @@ void app_heartbeat_publish(void)
     }
 }
 
-void app_update_telemetry(void)
+void app_telemetry_publish(void)
 {
-    platform_serial_println("Looping ...");
-    led_toggle();
+    telemetry_svc_publish();
 }
 
 void app_throttle_loop(void)

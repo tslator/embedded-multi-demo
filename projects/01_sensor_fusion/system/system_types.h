@@ -17,6 +17,7 @@ typedef enum
 typedef struct 
 {
     system_service_role_t role;
+    bool led_enabled;
 } system_service_t;
 
 typedef struct

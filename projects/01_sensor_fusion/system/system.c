@@ -20,7 +20,10 @@ static system_config_t default_config = {
         .oversample_count = 1u,
         .as_millivolt = true
     },
-    .heartbeat_svc = ROLE_HEARTBEAT
+    .heartbeat_svc = {
+        .role = ROLE_HEARTBEAT,
+        .led_enabled = true
+    }
 };
 
 static system_config_t *sys_config = nullptr;
@@ -42,7 +45,8 @@ system_status_t system_config(system_config_t *config)
     assert(drivers_adc_config(&sys_config->adc));
 
     app_config_t app_config_data = {
-        .loop_delay = 500
+        .loop_delay = 500,
+        .heartbeat_led_enabled = sys_config->heartbeat_svc.led_enabled
     };
 
     app_config(app_config_data);

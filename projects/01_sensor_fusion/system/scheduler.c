@@ -9,7 +9,7 @@ void sched_run(void)
     {
         app_setpoint_update();
         app_heartbeat_publish();
-        app_update_telemetry();
+        app_telemetry_publish();
         app_throttle_loop();
     }
 }

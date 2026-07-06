@@ -4,6 +4,7 @@
 #include "heartbeat_svc_types.h"
 #include "mock_platform.h"
 #include "mock_platform_delay.h"
+#include "mock_led.h"
 
 void setUp(void)
 {
@@ -52,6 +53,7 @@ void test_heartbeat_svc_process_value_caches_first_sample(void)
     heartbeat_status_t sample = {0};
 
     platform_time_now_ExpectAndReturn(100u);
+    led_toggle_Expect();
 
     TEST_ASSERT_TRUE(heartbeat_svc_process_value(7u));
     TEST_ASSERT_TRUE(heartbeat_svc_get_last(&sample));
@@ -68,9 +70,11 @@ void test_heartbeat_svc_process_value_tracks_delta_and_sequence_errors(void)
     heartbeat_status_t sample = {0};
 
     platform_time_now_ExpectAndReturn(100u);
+    led_toggle_Expect();
     TEST_ASSERT_TRUE(heartbeat_svc_process_value(10u));
 
     platform_time_now_ExpectAndReturn(150u);
+    led_toggle_Expect();
     TEST_ASSERT_TRUE(heartbeat_svc_process_value(12u));
 
     TEST_ASSERT_TRUE(heartbeat_svc_get_last(&sample));
@@ -87,4 +91,12 @@ void test_heartbeat_svc_stop_prevents_processing_updates(void)
 
     TEST_ASSERT_FALSE(heartbeat_svc_publish_next());
     TEST_ASSERT_FALSE(heartbeat_svc_process_value(1u));
+}
+
+void test_heartbeat_svc_process_value_does_not_toggle_led_when_disabled(void)
+{
+    heartbeat_svc_set_led_enabled(false);
+    platform_time_now_ExpectAndReturn(42u);
+
+    TEST_ASSERT_TRUE(heartbeat_svc_process_value(1u));
 }

@@ -16,7 +16,7 @@ void app_init(void);
 void app_config(app_config_t config);
 void app_heartbeat_publish(void);
 void app_setpoint_update(void);
-void app_update_telemetry(void);
+void app_telemetry_publish(void);
 void app_throttle_loop(void);
 void app_stop(void);
 void app_shutdown(void);

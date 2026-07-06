@@ -4,16 +4,24 @@
 #include "platform.h"
 #include "platform_delay.h"
 #include "nullptr_compat.h"
+#include "led.h"
+
 
 static heartbeat_status_t heartbeat_status;
 static bool heartbeat_running = false;
 static uint32_t heartbeat_counter = 0u;
+static bool heartbeat_led_enabled = true;
 
 void heartbeat_svc_init(void)
 {
     memset(&heartbeat_status, 0, sizeof(heartbeat_status));
     heartbeat_running = true;
     heartbeat_counter = 0u;
+}
+
+void heartbeat_svc_set_led_enabled(bool enabled)
+{
+    heartbeat_led_enabled = enabled;
 }
 
 bool heartbeat_svc_publish_next(void)
@@ -62,6 +70,11 @@ bool heartbeat_svc_process_value(uint32_t counter_value)
     heartbeat_status.last_timestamp_us = now_us;
     heartbeat_status.received_count++;
     heartbeat_status.valid = true;
+
+    if (heartbeat_led_enabled)
+    {
+        led_toggle();
+    }
 
     return true;
 }

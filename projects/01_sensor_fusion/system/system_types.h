@@ -1,6 +1,7 @@
 #ifndef SYSTEM_TYPES_H
 #define SYSTEM_TYPES_H
 
+#include <stdbool.h>
 #include <stdint.h>
 
 typedef enum
@@ -18,9 +19,17 @@ typedef struct
     system_service_role_t role;
 } system_service_t;
 
+typedef struct
+{
+    uint8_t channel;
+    uint16_t vref_millivolt;
+    uint8_t oversample_count;
+    bool as_millivolt;
+} system_adc_config_t;
+
 typedef struct 
 {
-    uint8_t adc_channel;
+    system_adc_config_t adc;
     system_service_t heartbeat_svc;
 } system_config_t;
 

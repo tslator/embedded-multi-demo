@@ -41,6 +41,7 @@ target_sources(sensor_fusion PRIVATE
     app/app.c
     app/heartbeat_svc.c
     app/setpoint_svc.c
+    app/telemetry_svc.c
     drivers/adc/adc.c
     drivers/drivers.c
     drivers/led/led.c

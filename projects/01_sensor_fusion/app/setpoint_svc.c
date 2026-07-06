@@ -3,6 +3,7 @@
 #include "drivers.h"
 #include "setpoint_svc.h"
 #include "drivers.h"
+#include "nullptr_compat.h"
 
 static setpoint_input_t setpoint_input;
 

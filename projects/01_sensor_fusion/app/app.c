@@ -1,12 +1,13 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#include "platform/platform.h"
-#include "platform/platform_delay.h"
-#include "platform/platform_serial.h"
+#include "platform.h"
+#include "platform_delay.h"
+#include "platform_serial.h"
 #include "drivers.h"
 #include "app.h"
 #include "led.h"
+#include "setpoint_svc.h"
 
 static uint16_t loop_delay = 255;
 static volatile uint32_t count = 0;
@@ -14,11 +15,21 @@ static volatile uint32_t count = 0;
 
 void app_init(void)
 {
+    setpoint_svc_init();
 }
 
 void app_config(app_config_t config)
 {
     loop_delay = config.loop_delay;
+}
+
+void app_setpoint_update(void)
+{
+    bool result = setpoint_svc_update();
+    if (!result)
+    {
+        // log update failure
+    }
 }
 
 void app_update_count(void)
@@ -44,10 +55,10 @@ void app_throttle_loop(void)
 
 void app_stop(void)
 {
-
+    setpoint_svc_stop();
 }
 
 void app_shutdown(void)
 {
-
+    app_stop();
 }

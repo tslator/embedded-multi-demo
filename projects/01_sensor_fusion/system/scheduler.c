@@ -8,7 +8,7 @@ void sched_run(void)
     while (true) 
     {
         app_setpoint_update();
-        app_update_count();
+        app_heartbeat_publish();
         app_update_telemetry();
         app_throttle_loop();
     }

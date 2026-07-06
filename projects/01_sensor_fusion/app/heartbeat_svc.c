@@ -7,11 +7,31 @@
 
 static heartbeat_status_t heartbeat_status;
 static bool heartbeat_running = false;
+static uint32_t heartbeat_counter = 0u;
 
 void heartbeat_svc_init(void)
 {
     memset(&heartbeat_status, 0, sizeof(heartbeat_status));
     heartbeat_running = true;
+    heartbeat_counter = 0u;
+}
+
+bool heartbeat_svc_publish_next(void)
+{
+    if (!heartbeat_running)
+    {
+        return false;
+    }
+
+    platform_fifo_push_u32(heartbeat_counter);
+    heartbeat_counter++;
+
+    if (heartbeat_counter > 10u)
+    {
+        heartbeat_counter = 0u;
+    }
+
+    return true;
 }
 
 bool heartbeat_svc_process_value(uint32_t counter_value)
@@ -60,6 +80,7 @@ bool heartbeat_svc_get_last(heartbeat_status_t *sample)
 void heartbeat_svc_stop(void)
 {
     heartbeat_running = false;
+    heartbeat_counter = 0u;
 }
 
 void heartbeat_svc_core1_loop(void)

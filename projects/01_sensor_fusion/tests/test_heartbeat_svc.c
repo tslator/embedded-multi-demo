@@ -26,6 +26,27 @@ void test_heartbeat_svc_get_last_returns_false_before_first_sample(void)
     TEST_ASSERT_FALSE(heartbeat_svc_get_last(&sample));
 }
 
+void test_heartbeat_svc_publish_next_pushes_counter_to_fifo(void)
+{
+    platform_fifo_push_u32_Expect(0u);
+    TEST_ASSERT_TRUE(heartbeat_svc_publish_next());
+
+    platform_fifo_push_u32_Expect(1u);
+    TEST_ASSERT_TRUE(heartbeat_svc_publish_next());
+}
+
+void test_heartbeat_svc_publish_next_wraps_counter_after_limit(void)
+{
+    for (uint32_t counter_value = 0u; counter_value <= 10u; ++counter_value)
+    {
+        platform_fifo_push_u32_Expect(counter_value);
+        TEST_ASSERT_TRUE(heartbeat_svc_publish_next());
+    }
+
+    platform_fifo_push_u32_Expect(0u);
+    TEST_ASSERT_TRUE(heartbeat_svc_publish_next());
+}
+
 void test_heartbeat_svc_process_value_caches_first_sample(void)
 {
     heartbeat_status_t sample = {0};
@@ -64,5 +85,6 @@ void test_heartbeat_svc_stop_prevents_processing_updates(void)
 {
     heartbeat_svc_stop();
 
+    TEST_ASSERT_FALSE(heartbeat_svc_publish_next());
     TEST_ASSERT_FALSE(heartbeat_svc_process_value(1u));
 }

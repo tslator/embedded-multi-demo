@@ -11,7 +11,6 @@
 #include "heartbeat_svc.h"
 
 static uint16_t loop_delay = 255;
-static volatile uint32_t count = 0;
 
 
 void app_init(void)
@@ -34,13 +33,12 @@ void app_setpoint_update(void)
     }
 }
 
-void app_update_count(void)
+void app_heartbeat_publish(void)
 {
-    platform_fifo_push_u32(count);
-    count++;
-    if (count > 10)
+    bool result = heartbeat_svc_publish_next();
+    if (!result)
     {
-        count = 0;
+        // log publish failure
     }
 }
 

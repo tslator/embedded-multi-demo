@@ -31,11 +31,17 @@ void drivers_init(void)
 bool drivers_adc_config(system_adc_config_t const *config)
 {
     bool is_null_config = config == nullptr;
+
+    if (is_null_config)
+    {
+        return false;
+    }
+
     bool is_invalid_channel = config->channel >= 8u;
     bool is_invalid_vref = config->vref_millivolt == 0u;
     bool is_invalid_oversample_count = config->oversample_count == 0u;
 
-    if (is_null_config || is_invalid_channel || is_invalid_vref || is_invalid_channel)
+    if (is_invalid_channel || is_invalid_vref || is_invalid_oversample_count)
     {
         return false;
     }

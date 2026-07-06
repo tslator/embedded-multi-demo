@@ -15,6 +15,7 @@ The application provides an high-level interface to the operation of the sensor 
 void app_init(void);
 void app_config(app_config_t config);
 void app_update_count(void);
+void app_setpoint_update(void);
 void app_update_telemetry(void);
 void app_throttle_loop(void);
 void app_stop(void);

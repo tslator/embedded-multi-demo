@@ -4,14 +4,14 @@
 #include <stdio.h>
 #include <memory.h>
 #include "heartbeat_svc.h"
-#include "platform/platform.h"
-#include "platform/platform_serial.h"
+#include "platform.h"
+#include "platform_serial.h"
 
 
 
 static volatile bool hold_in_reset = true;
 
-void app_heartbeat(void)
+void heartbeat_svc_loop(void)
 {
     char msg[64];
     memset(msg, 0, sizeof(msg));
@@ -27,7 +27,7 @@ void app_heartbeat(void)
 
 }
 
-void app_heartbeat_start(void)
+void heartbeat_svc_start(void)
 {
     hold_in_reset = false;
 }

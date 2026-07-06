@@ -1,6 +1,7 @@
 #include "unity.h"
 
 #include "app.h"
+#include "mock_heartbeat_svc.h"
 #include "mock_setpoint_svc.h"
 #include "mock_platform.h"
 #include "mock_platform_delay.h"
@@ -18,6 +19,7 @@ void tearDown(void)
 void test_app_init_initializes_setpoint_service(void)
 {
     setpoint_svc_init_Expect();
+    heartbeat_svc_init_Expect();
 
     app_init();
 }
@@ -41,6 +43,7 @@ void test_app_setpoint_update_invokes_setpoint_service(void)
 void test_app_stop_stops_setpoint_service(void)
 {
     setpoint_svc_stop_Expect();
+    heartbeat_svc_stop_Expect();
 
     app_stop();
 }

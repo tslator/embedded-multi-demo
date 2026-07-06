@@ -58,8 +58,7 @@ void system_start(void)
     {
         case ROLE_HEARTBEAT:
         default:
-            platform_core1_start(heartbeat_svc_loop);
-            heartbeat_svc_start();
+            platform_core1_start(heartbeat_svc_core1_loop);
             break;
     }
 

@@ -8,6 +8,7 @@
 #include "app.h"
 #include "led.h"
 #include "setpoint_svc.h"
+#include "heartbeat_svc.h"
 
 static uint16_t loop_delay = 255;
 static volatile uint32_t count = 0;
@@ -16,6 +17,7 @@ static volatile uint32_t count = 0;
 void app_init(void)
 {
     setpoint_svc_init();
+    heartbeat_svc_init();
 }
 
 void app_config(app_config_t config)
@@ -56,6 +58,7 @@ void app_throttle_loop(void)
 void app_stop(void)
 {
     setpoint_svc_stop();
+    heartbeat_svc_stop();
 }
 
 void app_shutdown(void)

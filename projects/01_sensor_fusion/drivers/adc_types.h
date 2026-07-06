@@ -16,7 +16,7 @@ typedef enum
 typedef struct 
 {
     uint8_t channel;
-    uint8_t vref_millivolt;
+    uint16_t vref_millivolt;
     uint8_t oversample_count;
     bool as_millivolt;
 } adc_config_t;

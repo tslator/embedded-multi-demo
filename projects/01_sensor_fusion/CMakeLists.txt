@@ -40,6 +40,7 @@ add_executable(sensor_fusion main.c)
 target_sources(sensor_fusion PRIVATE
     app/app.c
     app/heartbeat_svc.c
+    app/setpoint_svc.c
     drivers/adc/adc.c
     drivers/drivers.c
     drivers/led/led.c

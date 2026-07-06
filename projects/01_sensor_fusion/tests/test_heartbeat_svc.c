@@ -2,6 +2,7 @@
 
 #include "heartbeat_svc.h"
 #include "heartbeat_svc_types.h"
+#include "mock_platform.h"
 #include "mock_platform_delay.h"
 
 void setUp(void)

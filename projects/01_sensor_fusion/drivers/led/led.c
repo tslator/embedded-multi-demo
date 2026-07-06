@@ -1,4 +1,4 @@
-#include "platform/platform_led.h"
+#include "platform_led.h"
 
 
 void led_toggle()
